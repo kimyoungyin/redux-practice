@@ -49,10 +49,10 @@ subscribe: store 안에 있는 변화들을 알 수 있게 해줌
 npm i react-redux
 ```
 
-2. 시작하기
+2.  시작하기
 
-    - store, reducer: store 파일 내부에 작성(단 `export default store;` 해주자)
-    - 준비: 구독할 컴포넌트를 등록하기 위해 최상단 index.js에 App을 감싸는 Provider 등록. store를 provider 속성으로 import
+    -   store, reducer: store 파일 내부에 작성(단 `export default store;` 해주자)
+    -   준비: 구독할 컴포넌트를 등록하기 위해 최상단 index.js에 App을 감싸는 Provider 등록. store를 provider 속성으로 import
 
     ```js
     import ReactDOM from "react-dom";
@@ -67,8 +67,8 @@ npm i react-redux
     );
     ```
 
-    - mapStateToProps(getState 개념): state를 사용하고 싶은 컴포넌트에서 `export default connect(mapStateToProps)(컴포넌트)`
-        - 함수(문서 상 이름은 mapStateToProps): redux state, 해당 텀포넌트 props를 가져옴. return 값(꼭 state 자체일 필요는 없음)은 해당 컴포넌트의 prop이 됨
+    -   mapStateToProps(getState 개념): state를 사용하고 싶은 컴포넌트에서 `export default connect(mapStateToProps)(컴포넌트)`
+        -   함수(문서 상 이름은 mapStateToProps): redux state, 해당 텀포넌트 props를 가져옴. return 값(꼭 state 자체일 필요는 없음)은 해당 컴포넌트의 prop이 됨
 
     ```js
     function mapStateToProps(state, ownProps) {
@@ -78,9 +78,10 @@ npm i react-redux
     export default connect(getCurrentState)(Home);
     ```
 
-    - mapDispatchToProps(dispatch(action) 개념): dispatch를 사용하고 싶은 컴포넌트에서 `export default connect(null,mapDispatchToProps)(컴포넌트)`
-        - 함수(문서 상 이름은 mapDispatchToProps): dispatch 함수, 해당 텀포넌트 props를 가져옴. return 값(꼭 dispatch 자체일 필요는 없음)은 해당 컴포넌트의 prop이 됨
-        - 컴포넌트 내부에서 dispatch를 쓰는 것을 피하는 게 깔끔하다고 함.
+    -   mapDispatchToProps(dispatch(action) 개념): dispatch를 사용하고 싶은 컴포넌트에서 `export default connect(null,mapDispatchToProps)(컴포넌트)`
+        -   함수(문서 상 이름은 mapDispatchToProps): dispatch 함수, 해당 텀포넌트 props를 가져옴. return 값(꼭 dispatch 자체일 필요는 없음)은 해당 컴포넌트의 prop이 됨
+        -   컴포넌트 내부에서 dispatch를 쓰는 것을 피하는 게 깔끔하다고 함.
+        -   deletToDo도 마찬가지
 
     ```js
     // store.js
@@ -94,9 +95,16 @@ npm i react-redux
             addToDo: (text) => dispatch(actionCreator.addToDo(text)),
         };
     }
-
     // Home 컴포넌트
     function Home({ toDos, addToDo }) {...}
     // mapStateToProps, mapDispatchToProps 둘 다 필요한 경우 export
     export default connect(mapStateToProps, mapDispatchToProps)(컴포넌트);
+
+    // deleteToDo
+    // ToDo,js
+    function mapDispatchToProps(dispatch, ownProps) {
+        return {
+            onBtnClick: () => dispatch(actionCreator.deleteToDo(ownProps.id)),
+        };
+    }
     ```
