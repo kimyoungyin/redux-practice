@@ -123,6 +123,7 @@ npm i @reduxjs/toolkit
 2. createAction: action을 정의하지 않아도 된다.
 
     - 대신 reducer에 전달된 action에는 type과 payload(데이터)만 있다.
+    - 작성법: `action = createAction(type)`
 
     ```js
     // store.js
