@@ -108,3 +108,39 @@ npm i react-redux
         };
     }
     ```
+
+## Redux toolkit 시작하기
+
+-   기존 react-redux의 문제점: 코드가 너무 길다..
+-   적은 양의 코드만으로 redux 기능을 사용할 수 없을까?
+
+1. redux-toolkit 설치
+
+```sh
+npm i @reduxjs/toolkit
+```
+
+2. createAction: action을 정의하지 않아도 된다.
+
+    - 대신 reducer에 전달된 action에는 type과 payload(데이터)만 있다.
+
+    ```js
+    // store.js
+    import { createAction } from "@reduxjs/toolkit";
+
+    const addToDo = createAction("ADD"); // addToDo.type === "ADD"
+    const deleteToDo = createAction("DELETE"); // deleteToDo === "DELETE"
+    // 아래는 전과 동일
+    export const actionCreator = {
+        addToDo,
+        deleteToDo,
+    };
+
+    // home.js
+    function mapDispatchToProps(dispatch, ownProps) {
+        return {
+            addToDo: (text) => dispatch(actionCreator.addToDo(text)),
+            // reducer에서 action.payload === text
+        };
+    }
+    ```
