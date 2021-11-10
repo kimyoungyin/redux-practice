@@ -145,3 +145,30 @@ npm i @reduxjs/toolkit
         };
     }
     ```
+
+3. createReducer: reducer 대체
+
+    - switch문 등등의 코드 단축
+    - state를 mutate하기 쉬워짐(원래 안되었음)
+    - state 변경하는 법 2가지
+        - 새로운 state를 return(꼭 새로운 값이어야 함)
+        - state를 mutate(return 필요없음)
+
+    ```js
+    const getLocalToDos = JSON.parse(localStorage.getItem("toDos"));
+
+    const reducer = createReducer(getLocalToDos || [], {
+        [addToDo]: (state, action) => {
+            const newToDo = { text: action.payload, id: Date.now() };
+            state.push(newToDo);
+            localStorage.setItem("toDos", JSON.stringify(state));
+        },
+        [deleteToDo]: (state, action) => {
+            const filteredToDos = state.filter(
+                (toDo) => toDo.id !== action.payload
+            );
+            localStorage.setItem("toDos", JSON.stringify(filteredToDos));
+            return filteredToDos;
+        },
+    });
+    ```
