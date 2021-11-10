@@ -179,3 +179,38 @@ npm i @reduxjs/toolkit
     ```js
     const store = configureStore({ reducer });
     ```
+5. createSlice: reducer, action을 모두 축약!(캡슐화)
+    - createSlice가 return하는 것: action, reducer
+    ```js
+    // console.log(toDos)
+    {name: 'toDosReducer', actions: {…}, caseReducers: {…}, reducer: ƒ}
+    actions: {add: ƒ, remove: ƒ}
+    caseReducers: {add: ƒ, remove: ƒ}
+    name: "toDosReducer"
+    reducer: ƒ (state, action)
+    ```
+
+```js
+const toDos = createSlice({
+    name: "toDosReducer",
+    initialState: getLocalToDos || [],
+    reducers: {
+        add: (state, action) => {
+            const newToDo = { text: action.payload, id: Date.now() };
+            state.push(newToDo);
+            localStorage.setItem("toDos", JSON.stringify(state));
+        },
+        remove: (state, action) => {
+            const filteredToDos = state.filter(
+                (toDo) => toDo.id !== action.payload
+            );
+            localStorage.setItem("toDos", JSON.stringify(filteredToDos));
+            return filteredToDos;
+        },
+    },
+});
+
+export const { add, remove } = toDos.actions;
+
+export default configureStore({ reducer: toDos.reducer });
+```
