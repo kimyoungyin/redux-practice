@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 
 const addToDo = createAction("ADD");
 const deleteToDo = createAction("DELETE");
@@ -21,7 +21,7 @@ const reducer = createReducer(getLocalToDos || [], {
     },
 });
 
-const store = createStore(reducer);
+const store = configureStore({ reducer });
 
 export const actionCreator = {
     addToDo,

@@ -172,3 +172,10 @@ npm i @reduxjs/toolkit
         },
     });
     ```
+
+4. configureStore: createStore 대체
+    - 기능: createStore + [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ko)로 코드 리팩토링 용이
+    - 사용법
+    ```js
+    const store = configureStore({ reducer });
+    ```
